@@ -32,10 +32,11 @@ typedef struct		s_d
 {
 	int				dx;
 	int				dy;
+	float			dz;
 	double			drx;
 	double			dry;
 	double			drz;
-	double			ds;
+	int				ds;
 	int				help;
 }					t_d;
 
@@ -73,18 +74,23 @@ void	create_elem(t_m *map, char *point);
 void	create_color_elem(t_m *map, char *point);
 void	in_to_int_array(t_m *map);
 void	draw(t_m *map);
-void	brazenhaime(int x1, int y1, int x2, int y2, t_m *map);
-void	scale_calc(t_m *map);
+
+void	brazenhaime(int *point1, int *point2, t_m *map);
+int		*change(int x, int y, int z, t_m *map);
 
 void	controls(t_m *map);
 int		keypress(int key, void *param);
 // int		close(void *param);
-void	xyz_moving(int key, t_m *map);
+void	xy_moving(int key, t_m *map);
 void	rotating(int key, t_m *map);
 void	z_change(int key, t_m *map);
-// void	choose_projection(int key,  t_m *map);
+void	choose_projection(int key,  t_m *map);
+void	scaling(int key, t_m *map);
 
-
+int		*rot_x(int *point, t_m *map);
+int		*rot_y(int *point, t_m *map);
+int		*rot_z(int *point, t_m *map);
+void	isometric(int *point);
 
 
 #endif

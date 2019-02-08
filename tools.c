@@ -40,10 +40,8 @@ void	in_to_int_array(t_m *map)
 	head = map->elem;
 	while (head)
 	{
-		map->array[0][i] = (head->x * map->scale + WIN_SIZE_X / 2 - map->width / 2 * map->scale);
-		map->array[1][i] = (head->y * map->scale + WIN_SIZE_Y / 2 - map->length / 2 * map->scale);
-		// map->array[0][i] = head->x;
-		// map->array[1][i] = head->y;
+		map->array[0][i] = head->x;
+		map->array[1][i] = head->y;
 		map->array[2][i] = head->z;
 		map->arr_len += 1;
 		i++;
@@ -51,12 +49,3 @@ void	in_to_int_array(t_m *map)
 	}
 }
 
-void	scale_calc(t_m *map)
-{
-	int		x;
-	int		y;
-
-	x = WIN_SIZE_X / map->width;
-	y = WIN_SIZE_Y / map->length;
-	(x <= y) ? (map->scale = x / 1.2) : (map->scale = y / 1.2);
-}

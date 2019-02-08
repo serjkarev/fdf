@@ -20,7 +20,7 @@ void	init_map(t_m *map)
 	map->length = 0;
 	map->elem = NULL;
 	d = (t_d*)ft_memalloc(sizeof(t_d));
-	*d = (t_d){0, 0, 0.0, 0.0, 0.0, 0.2, 0};
+	*d = (t_d){0, 0, 1, 0, 0, 0, 1, 0};
 	map->delta = d;
 	map->project = 1;
 }
