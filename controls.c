@@ -52,13 +52,13 @@ int		keypress(int key, void *param)
 void	xy_moving(int key, t_m *map)
 {
 	if (key == 123)
-		map->delta->dx -= 5;
+		map->delta->dx -= 10;
 	else if (key == 124)
-		map->delta->dx += 5;
+		map->delta->dx += 10;
 	else if (key == 126)
-		map->delta->dy -= 5;
+		map->delta->dy -= 10;
 	else if (key == 125)
-		map->delta->dy += 5;
+		map->delta->dy += 10;
 	draw(map);
 }
 

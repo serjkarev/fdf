@@ -27,35 +27,47 @@ int		main(int ac, char **av)
 	in_to_int_array(map);
 	map->ptr = mlx_init();
 	map->window = mlx_new_window(map->ptr, WIN_SIZE_X, WIN_SIZE_Y, "fdf");
-	draw(map);
-	controls(map);
+
+	int		point1[3] = {200, 200, 0};
+	int		point2[8][3] = {{100, 100, 0},
+	{200, 50, 0},
+	{300, 100, 0},
+	{100, 300, 0},
+	{300, 300, 0},
+	{200, 350, 0},
+	{50, 200, 0},
+	{350, 200, 0},
+	};
+
+	int i = 0;
+	while (i <= 8)
+	{
+		mlx_pixel_put(map->ptr, map->window, point2[i][0], point2[i][1], 255);
+		i++;
+	}
+	i = 0;
+	while (i < 8)
+	{
+		int		point1[3] = {200, 200, 0};
+		// brazenhaime(point2[i++], point1, map);
+		brazenhaime(point1, point2[i++], map);
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	// draw(map);
+	// controls(map);
 	mlx_loop(map->ptr);
 	return (0);
 }
-
-// void	brazenhaime(int x1, int y1, int x2, int y2, t_m *map)
-// {
-// 	int		d_x = ABS(x2 - x1);
-// 	int		d_y = ABS(y2 - y1);
-// 	int		s_x = x1 < x2 ? 1 : -1;
-// 	int		s_y = y1 < y2 ? 1 : -1;
-// 	int		error = d_x - d_y;
-// 	int 	error2;
-
-// 	mlx_pixel_put(map->ptr, map->window, x2, y2, 255);
-// 	while (x1 != x2 || y1 != y2)
-// 	{
-// 		mlx_pixel_put(map->ptr, map->window, x1, y1, 255);
-// 		error2 = error * 2;
-// 		if (error2 > -d_y)
-// 		{
-// 			error -= d_y;
-// 			x1 += s_x;
-// 		}
-// 		if (error2 < d_x)
-// 		{
-// 			error += d_x;
-// 			y1 += s_y;
-// 		}
-// 	}
-// }

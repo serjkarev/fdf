@@ -15,6 +15,9 @@
 void	draw(t_m *map)
 {
 	int i;
+	int *point1;
+	int	*point2;
+	int	*point3;
 
 	i = 0;
 	mlx_clear_window(map->ptr, map->window);
@@ -22,14 +25,16 @@ void	draw(t_m *map)
 	{
 		if ((i + 1) % map->width != 0)
 		{
-			printf("huila");
+			printf("##### FIRST BRAZ #########\n");
 			brazenhaime(change(map->array[0][i],map->array[1][i], map->array[2][i], map),change(map->array[0][i+1],map->array[1][i+1], map->array[2][i+1], map), map);
 		}
 		if (i + map->width < map->arr_len)
 		{
-			printf("jopa");
+			printf("##### SEC BRAZ #########\n");
 			brazenhaime(change(map->array[0][i], map->array[1][i], map->array[2][i], map), change(map->array[0][i + map->width], map->array[1][i + map->width], map->array[2][i + map->width], map), map);
 		}
+		
+		
 		i++;
 	}
 }
@@ -44,17 +49,25 @@ void	brazenhaime(int *point1, int *point2, t_m *map)
 	int		s_y = point1[1] < point2[1] ? 1 : -1;
 	int		error = d_x - d_y;
 	int 	error2;
-
+	
+	printf("########### IN BRAZ ##################\n");
+	printf("point1 x = %d y = %d z = %d\n", point1[0], point1[1], point1[2]);
+	printf("point2 x = %d y = %d z = %d\n", point2[0], point2[1], point2[2]);
 	// if (point2[0] > 0 && point2[0] < WIN_SIZE_X && point2[1] > 0 && point2[1] < WIN_SIZE_Y)
-		mlx_pixel_put(map->ptr, map->window, point2[0], point2[1], 255);
+	mlx_pixel_put(map->ptr, map->window, point2[0], point2[1], 255);
 	int a = 0;
 	while (point1[0] != point2[0] || point1[1] != point2[1])
 	{
 		a++;
 		if (a > OVER_DOHUA)
+		{
+			printf("huihuihuihuihuihuihuihuihuihuihuihui\n");
+			printf("point1 x = %d y = %d z = %d\n", point1[0], point1[1], point1[2]);
+			printf("point2 x = %d y = %d z = %d\n", point2[0], point2[1], point2[2]);
 			break;
+		}
 		// if (point1[0] > 0 && point1[0] < WIN_SIZE_X && point1[1] > 0 && point1[1] < WIN_SIZE_Y)
-			mlx_pixel_put(map->ptr, map->window, point1[0], point1[1], 255);
+		mlx_pixel_put(map->ptr, map->window, point1[0], point1[1], 255);
 		error2 = error * 2;
 		if (error2 > -d_y)
 		{
@@ -67,12 +80,15 @@ void	brazenhaime(int *point1, int *point2, t_m *map)
 			point1[1] += s_y;
 		}
 	}
+	// free(point1);
+	// free(point2);
 }
 
 int		*change(int x, int y, int z, t_m *map)
 {
 	int		*out;
 
+	// printf("prev x = %d y = %d z = %d\n", x, y, z);
 	out = (int*)ft_memalloc(sizeof(int) * 3);
 	out[0] = x * map->delta->ds;
 	out[1] = y * map->delta->ds;
@@ -85,14 +101,15 @@ int		*change(int x, int y, int z, t_m *map)
 	if (map->project == 2)
 	{
 		// out = isometric(out);
-		printf("###########################################\n");
-		printf("x = %d y = %d z = %d\n", out[0], out[1], out[2]);
+		// printf("###########################################\n");
+		// printf("x = %d y = %d z = %d\n", out[0], out[1], out[2]);
 		isometric(out);
-		printf("x = %d y = %d z = %d\n", out[0], out[1], out[2]);
-		printf("###########################################\n");
+		// printf("x = %d y = %d z = %d\n", out[0], out[1], out[2]);
+		// printf("###########################################\n");
 	}
 	out[0] += WIN_SIZE_X / 2 + map->delta->dx;
 	out[1] += (WIN_SIZE_Y + map->delta->ds) / 2 + map->delta->dy;
+	// printf("after x = %d y = %d z = %d\n", out[0], out[1], out[2]);
 	return (out);
 }
 
