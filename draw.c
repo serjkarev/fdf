@@ -15,101 +15,57 @@
 void	draw(t_m *map)
 {
 	int i;
-	int *point1;
-	int	*point2;
-	int	*point3;
 
 	i = 0;
 	mlx_clear_window(map->ptr, map->window);
 	while (i + 1 <= map->arr_len)
 	{
 		if ((i + 1) % map->width != 0)
-		{
-			printf("##### FIRST BRAZ #########\n");
-			brazenhaime(change(map->array[0][i],map->array[1][i], map->array[2][i], map),change(map->array[0][i+1],map->array[1][i+1], map->array[2][i+1], map), map);
-		}
+			brazenhaime(change(map->array[0][i],map->array[1][i], map->array[2][i], map),\
+				change(map->array[0][i+1],map->array[1][i+1], map->array[2][i+1], map), map);
 		if (i + map->width < map->arr_len)
-		{
-			printf("##### SEC BRAZ #########\n");
-			brazenhaime(change(map->array[0][i], map->array[1][i], map->array[2][i], map), change(map->array[0][i + map->width], map->array[1][i + map->width], map->array[2][i + map->width], map), map);
-		}
-		
-		
+			brazenhaime(change(map->array[0][i], map->array[1][i], map->array[2][i], map), \
+				change(map->array[0][i + map->width], map->array[1][i + map->width], map->array[2][i + map->width], map), map);
 		i++;
 	}
+	if (map->delta->help == 1)
+		print_help_menu(map);
 }
-
-# define OVER_DOHUA 1000
-
+ 
 void	brazenhaime(int *point1, int *point2, t_m *map)
 {
-	int		d_x = ABS(point2[0] - point1[0]);
-	int		d_y = ABS(point2[1] - point1[1]);
-	int		s_x = point1[0] < point2[0] ? 1 : -1;
-	int		s_y = point1[1] < point2[1] ? 1 : -1;
-	int		error = d_x - d_y;
-	int 	error2;
-	
-	printf("########### IN BRAZ ##################\n");
-	printf("point1 x = %d y = %d z = %d\n", point1[0], point1[1], point1[2]);
-	printf("point2 x = %d y = %d z = %d\n", point2[0], point2[1], point2[2]);
-	// if (point2[0] > 0 && point2[0] < WIN_SIZE_X && point2[1] > 0 && point2[1] < WIN_SIZE_Y)
-	mlx_pixel_put(map->ptr, map->window, point2[0], point2[1], 255);
-	int a = 0;
-	while (point1[0] != point2[0] || point1[1] != point2[1])
-	{
-		a++;
-		if (a > OVER_DOHUA)
-		{
-			printf("huihuihuihuihuihuihuihuihuihuihuihui\n");
-			printf("point1 x = %d y = %d z = %d\n", point1[0], point1[1], point1[2]);
-			printf("point2 x = %d y = %d z = %d\n", point2[0], point2[1], point2[2]);
-			break;
-		}
-		// if (point1[0] > 0 && point1[0] < WIN_SIZE_X && point1[1] > 0 && point1[1] < WIN_SIZE_Y)
+	t_b		*braz;
+
+	braz = (t_b*)ft_memalloc(sizeof(t_b));
+	init_braz(braz, point1, point2);
+	if (braz->length == 0)
 		mlx_pixel_put(map->ptr, map->window, point1[0], point1[1], 255);
-		error2 = error * 2;
-		if (error2 > -d_y)
-		{
-			error -= d_y;
-			point1[0] += s_x;
-		}
-		if (error2 < d_x)
-		{
-			error += d_x;
-			point1[1] += s_y;
-		}
-	}
-	// free(point1);
-	// free(point2);
+	if (braz->lengthY <= braz->lengthX)
+		braz_helper(map, braz, point1, 1);
+	else
+		braz_helper(map, braz, point1, 2);
+	free(point1);
+	free(point2);
+	free(braz);
 }
 
 int		*change(int x, int y, int z, t_m *map)
 {
 	int		*out;
 
-	// printf("prev x = %d y = %d z = %d\n", x, y, z);
 	out = (int*)ft_memalloc(sizeof(int) * 3);
 	out[0] = x * map->delta->ds;
 	out[1] = y * map->delta->ds;
-	out[2] = z * (map->delta->ds / map->delta->dz);//возможно здесь
+	out[2] = z * (map->delta->ds / map->delta->dz);
 	out[0] -= (map->width * map->delta->ds) / 2;
 	out[1] -= (map->length * map->delta->ds) / 2;
 	out = rot_x(out, map);
 	out = rot_y(out, map);
 	out = rot_z(out, map);
 	if (map->project == 2)
-	{
-		// out = isometric(out);
-		// printf("###########################################\n");
-		// printf("x = %d y = %d z = %d\n", out[0], out[1], out[2]);
-		isometric(out);
-		// printf("x = %d y = %d z = %d\n", out[0], out[1], out[2]);
-		// printf("###########################################\n");
-	}
+		out = isometric(out);
 	out[0] += WIN_SIZE_X / 2 + map->delta->dx;
 	out[1] += (WIN_SIZE_Y + map->delta->ds) / 2 + map->delta->dy;
-	// printf("after x = %d y = %d z = %d\n", out[0], out[1], out[2]);
 	return (out);
 }
 
@@ -145,19 +101,7 @@ int		*rot_z(int *point, t_m *map)
 	return (point);
 }
 
-// int		*isometric(int *point)
-// {
-// 	int	prev_x;
-// 	int	prev_y;
-
-// 	prev_x = point[0];
-// 	prev_y = point[1];
-// 	point[0] = (prev_x - prev_y) * cos(0.523599);
-// 	point[1] = -point[2] + (prev_x + prev_y) * sin(0.523599);
-// 	return (point);
-// }
-
-void	isometric(int *point)
+int		*isometric(int *point)
 {
 	int	prev_x;
 	int	prev_y;
@@ -166,4 +110,5 @@ void	isometric(int *point)
 	prev_y = point[1];
 	point[0] = (prev_x - prev_y) * cos(0.523599);
 	point[1] = -point[2] + (prev_x + prev_y) * sin(0.523599);
+	return (point);
 }

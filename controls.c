@@ -35,10 +35,10 @@ int		keypress(int key, void *param)
 		scaling(key, map);
 	else if (key == 18 || key == 19)
 		choose_projection(key, map);
-	// else if (key == 116 || key == 121)
-	// 	z_change(key, map);
+	else if (key == 116 || key == 121)
+		z_change(key, map);
 	else if (key == 4)
-		map->delta->help = 1;
+		help_switch(map);
 	return (0);
 }
 
@@ -112,5 +112,14 @@ void	choose_projection(int key,  t_m *map)
 		map->project = 1;
 	else if (key == 19)
 		map->project = 2;
+	draw(map);
+}
+
+void	help_switch(t_m *map)
+{
+	if (map->delta->help == 1)
+		map->delta->help = 0;
+	else if (map->delta->help == 0)
+		map->delta->help = 1;
 	draw(map);
 }

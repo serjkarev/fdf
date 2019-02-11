@@ -49,3 +49,41 @@ void	in_to_int_array(t_m *map)
 	}
 }
 
+void	init_braz(t_b *braz, int *point1, int *point2)
+{
+	braz->dx = (point2[0] - point1[0] >= 0 ? 1 : -1);
+	braz->dy = (point2[1] - point1[1] >= 0 ? 1 : -1);
+	braz->lengthX = abs(point2[0] - point1[0]);
+	braz->lengthY = abs(point2[1] - point1[1]);
+	braz->length = fmax(braz->lengthX, braz->lengthY);
+}
+
+void	braz_helper(t_m *map, t_b *braz, int *point1, int flag)
+{
+	int x;
+	int y;
+	int d;
+
+	x = point1[0];
+	y = point1[1];
+	(flag == 1) ? (d = -braz->lengthX) : (d = -braz->lengthY);
+	braz->length++;
+	while(braz->length--)
+	{
+		if (x <= WIN_SIZE_X && x >= 0 && y <= WIN_SIZE_Y && y >= 0)
+			mlx_pixel_put(map->ptr, map->window, x, y, 255);
+		(flag == 1) ? (x += braz->dx) : (y += braz->dy);
+		(flag == 1) ? (d += 2 * braz->lengthY) : (d += 2 * braz->lengthX);
+		if (d > 0)
+		{
+			(flag == 1) ? (d -= 2 * braz->lengthX) : (d -= 2 * braz->lengthY);
+			(flag == 1) ? (y += braz->dy) : (x += braz->dx);
+		}
+	}
+}
+
+void	print_help_menu(t_m *map)
+{
+	mlx_string_put(map->ptr, map->window, 10, 10, 255, "HELP MENU");
+	mlx_string_put(map->ptr, map->window, 10, 30, 0x1DE2F0, "sosi pisos");
+}

@@ -27,6 +27,16 @@
 # define ER04 "Memory allocation failed\n"
 
 # define ABS(n) (n >= 0 ? n : (n * -1))
+# define roundf(x) floor(x + 0.5f)
+
+typedef struct		s_b
+{
+	int				dx;
+	int				dy;
+	int				lengthX;
+	int				lengthY;
+	int				length;
+}					t_b;
 
 typedef struct		s_d
 {
@@ -76,6 +86,8 @@ void	in_to_int_array(t_m *map);
 void	draw(t_m *map);
 
 void	brazenhaime(int *point1, int *point2, t_m *map);
+void	init_braz(t_b *braz, int *point1, int *point2);
+void	braz_helper(t_m *map, t_b *braz, int *point1, int flag);
 int		*change(int x, int y, int z, t_m *map);
 
 void	controls(t_m *map);
@@ -86,11 +98,13 @@ void	rotating(int key, t_m *map);
 void	z_change(int key, t_m *map);
 void	choose_projection(int key,  t_m *map);
 void	scaling(int key, t_m *map);
+void	help_switch(t_m *map);
 
 int		*rot_x(int *point, t_m *map);
 int		*rot_y(int *point, t_m *map);
 int		*rot_z(int *point, t_m *map);
-void	isometric(int *point);
+int		*isometric(int *point);
 
+void	print_help_menu(t_m *map);
 
 #endif
