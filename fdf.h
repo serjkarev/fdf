@@ -17,8 +17,8 @@
 # include "./minilibx_macos/mlx.h"
 # include <math.h>
 
-# define WIN_SIZE_X 1000
-# define WIN_SIZE_Y 1000
+# define WIN_SIZE_X 1920
+# define WIN_SIZE_Y 1080
 
 # define USAGE "[ Usage ] : ./fdf exemple_map.fdf"
 # define ER01 "Bad input\n"

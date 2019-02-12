@@ -12,9 +12,16 @@
 
 #include "fdf.h"
 
+int		close_icon(void *param)
+{
+	(void)param;
+	exit(0);
+	return (0);
+}
+
 void	controls(t_m *map)
 {
-	// mlx_hook(map->window, 17, 0, close, (void*)map);
+	mlx_hook(map->window, 17, 0, close_icon, (void*)map);
 	mlx_hook(map->window, 2, 0, keypress, (void*)map);
 }
 
@@ -42,12 +49,6 @@ int		keypress(int key, void *param)
 	return (0);
 }
 
-// int		close(void *param)
-// {
-// 	(void)param;
-// 	exit(0);
-// 	return (0);
-// }
 
 void	xy_moving(int key, t_m *map)
 {
@@ -82,9 +83,9 @@ void	rotating(int key, t_m *map)
 void	z_change(int key, t_m *map)
 {
 	if (key == 116)
-		map->delta->dz += 0.2;
-	else if (key == 121)
 		map->delta->dz -= 0.2;
+	else if (key == 121)
+		map->delta->dz += 0.2;
 	if (map->delta->dz < 0.2)
 		map->delta->dz = 0.2;
 	else if (map->delta->dz > 10)

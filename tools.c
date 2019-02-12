@@ -84,6 +84,16 @@ void	braz_helper(t_m *map, t_b *braz, int *point1, int flag)
 
 void	print_help_menu(t_m *map)
 {
-	mlx_string_put(map->ptr, map->window, 10, 10, 255, "HELP MENU");
-	mlx_string_put(map->ptr, map->window, 10, 30, 0x1DE2F0, "sosi pisos");
+	mlx_string_put(map->ptr, map->window, 10, 10, 0x32CD32, "   HELP MENU");
+	mlx_string_put(map->ptr, map->window, 10, 40, 0x32CD32, "isometric(def) 1");
+	mlx_string_put(map->ptr, map->window, 10, 60, 0x32CD32, "parralel       2");
+	mlx_string_put(map->ptr, map->window, 10, 100, 0x32CD32, "move left    <");
+	mlx_string_put(map->ptr, map->window, 10, 120, 0x32CD32, "move right   >");
+	mlx_string_put(map->ptr, map->window, 10, 140, 0x32CD32, "move up      ^");
+	mlx_string_put(map->ptr, map->window, 10, 160, 0x32CD32, "move down    v");
+	mlx_string_put(map->ptr, map->window, 10, 200, 0x32CD32, "zoom         +-");
+	mlx_string_put(map->ptr, map->window, 10, 230, 0x32CD32, "rot x        num2 num8");
+	mlx_string_put(map->ptr, map->window, 10, 250, 0x32CD32, "rot y        num4 num6");
+	mlx_string_put(map->ptr, map->window, 10, 270, 0x32CD32, "rot z        home end");
+	mlx_string_put(map->ptr, map->window, 10, 310, 0x32CD32, "flatten      pg_up pg_down");
 }

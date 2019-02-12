@@ -62,7 +62,7 @@ int		*change(int x, int y, int z, t_m *map)
 	out = rot_x(out, map);
 	out = rot_y(out, map);
 	out = rot_z(out, map);
-	if (map->project == 2)
+	if (map->project == 1)
 		out = isometric(out);
 	out[0] += WIN_SIZE_X / 2 + map->delta->dx;
 	out[1] += (WIN_SIZE_Y + map->delta->ds) / 2 + map->delta->dy;
