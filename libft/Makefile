@@ -77,7 +77,8 @@ SOURCES = ft_atoi.c \
 			ft_tolower.c \
 			ft_toupper.c \
 			get_next_line.c \
-			ft_matrix_mult.c
+			ft_matrix_mult.c \
+			ft_atoi_hex.c
 
 OBJECTS = ft_atoi.o \
 			ft_bzero.o \
@@ -143,7 +144,8 @@ OBJECTS = ft_atoi.o \
 			ft_tolower.o \
 			ft_toupper.o \
 			get_next_line.o \
-			ft_matrix_mult.o
+			ft_matrix_mult.o \
+			ft_atoi_hex.o
 
 $(NAME):
 	@gcc -c $(FLAGS) $(SOURCES) -I $(HEADERS)
