@@ -19,8 +19,9 @@ void	init_map(t_m *map)
 	map->width = 0;
 	map->length = 0;
 	map->elem = NULL;
+	map->custom_color = 0;
 	d = (t_d*)ft_memalloc(sizeof(t_d));
-	*d = (t_d){0, 0, 10, 0, 0, 0, 1, 0};
+	*d = (t_d){0, 0, 10, 0, 0, 0, 1, 0, 0};
 	map->delta = d;
 	map->project = 1;
 	// map->delta->ds = WIN_SIZE_X / map->width;

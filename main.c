@@ -27,6 +27,9 @@ int		main(int ac, char **av)
 	in_to_int_array(map);
 	map->ptr = mlx_init();
 	map->window = mlx_new_window(map->ptr, WIN_SIZE_X, WIN_SIZE_Y, "fdf");
+	map->img = mlx_new_image(map->ptr, WIN_SIZE_X, WIN_SIZE_Y);
+	map->data_adr = mlx_get_data_addr(map->img, &(map->bit_per_pix),
+										&(map->line_size), &(map->endian));
 	draw(map);
 	controls(map);
 	mlx_loop(map->ptr);

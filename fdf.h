@@ -36,6 +36,7 @@ typedef struct		s_b
 	int				lengthX;
 	int				lengthY;
 	int				length;
+	int				color;
 }					t_b;
 
 typedef struct		s_d
@@ -48,6 +49,7 @@ typedef struct		s_d
 	double			drz;
 	int				ds;
 	int				help;
+	int				dc;
 }					t_d;
 
 typedef struct		s_e
@@ -70,7 +72,12 @@ typedef struct		s_m
 	int				arr_len;
 	void			*ptr;
 	void			*window;
-	int				scale;
+	void			*img;
+	char			*data_adr;
+	int				bit_per_pix;
+	int				line_size;
+	int				endian;
+	int				custom_color;
 	struct s_d		*delta;
 	int				project;
 }					t_m;
@@ -85,14 +92,13 @@ void	create_color_elem(t_m *map, char *point);
 void	in_to_int_array(t_m *map);
 void	draw(t_m *map);
 
-void	brazenhaime(int *point1, int *point2, t_m *map);
-void	init_braz(t_b *braz, int *point1, int *point2);
+void	brazenhaime(int *point1, int *point2, t_m *map, int color);
+void	init_braz(t_b *braz, int *point1, int *point2, int color);
 void	braz_helper(t_m *map, t_b *braz, int *point1, int flag);
 int		*change(int x, int y, int z, t_m *map);
 
 void	controls(t_m *map);
 int		keypress(int key, void *param);
-// int		close(void *param);
 void	xy_moving(int key, t_m *map);
 void	rotating(int key, t_m *map);
 void	z_change(int key, t_m *map);
@@ -106,5 +112,8 @@ int		*rot_z(int *point, t_m *map);
 int		*isometric(int *point);
 
 void	print_help_menu(t_m *map);
+void	change_color(t_m *map);
+
+void	pixel_put(t_m *map, int x, int y, int color);
 
 #endif

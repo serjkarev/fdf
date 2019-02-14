@@ -23,7 +23,7 @@ void	create_color_elem(t_m *map, char *point)
 		map->elem->y = map->length;
 		arr = ft_strsplit(point, ',');
 		map->elem->z = ft_atoi(arr[0]);
-		// map->elem->color = ft_atoi(arr[1]);//тут тоже нужно будет подумать как правильно
+		map->elem->color = ft_atoi_hex(arr[1]);
 		map->elem->next = NULL;
 		map->elem->tail = map->elem;
 	}
@@ -35,7 +35,7 @@ void	create_color_elem(t_m *map, char *point)
 		map->elem->tail->y = map->length;
 		arr = ft_strsplit(point, ',');
 		map->elem->tail->z = ft_atoi(arr[0]);
-		// map->elem->tail->color = ft_atoi(arr[1]);//и вот тут тоже подумать
+		map->elem->tail->color = ft_atoi_hex(arr[1]);
 		map->elem->tail->next = NULL;
 	}
 }
