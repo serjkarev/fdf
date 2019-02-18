@@ -18,23 +18,27 @@ void	draw(t_m *map)
 	int color;
 
 	i = 0;
-	ft_bzero(map->data_adr, (map->bit_per_pix / 8) * WIN_SIZE_X * WIN_SIZE_Y);
 	while (i + 1 <= map->arr_len)
 	{
 		color = map->array[3][i] + map->custom_color;
 		if ((i + 1) % map->width != 0)
-			brazenhaime(change(map->array[0][i],map->array[1][i], map->array[2][i], map),\
-				change(map->array[0][i+1],map->array[1][i+1], map->array[2][i+1], map), map, color);
+			brazenhaime(\
+			change(map->array[0][i], map->array[1][i], map->array[2][i], map),\
+			change(map->array[0][i + 1], map->array[1][i + 1],\
+			map->array[2][i + 1], map), map, color);
 		if (i + map->width < map->arr_len)
-			brazenhaime(change(map->array[0][i], map->array[1][i], map->array[2][i], map), \
-				change(map->array[0][i + map->width], map->array[1][i + map->width], map->array[2][i + map->width], map), map, color);
+			brazenhaime(\
+			change(map->array[0][i], map->array[1][i], map->array[2][i], map),\
+			change(map->array[0][i + map->width],\
+			map->array[1][i + map->width], map->array[2][i + map->width],\
+			map), map, color);
 		i++;
 	}
 	mlx_put_image_to_window(map->ptr, map->window, map->img, 0, 0);
 	if (map->delta->help == 1)
-		print_help_menu(map);
+		print_help_menu(map->ptr, map->window);
 }
- 
+
 void	brazenhaime(int *point1, int *point2, t_m *map, int color)
 {
 	t_b		*braz;
@@ -43,7 +47,7 @@ void	brazenhaime(int *point1, int *point2, t_m *map, int color)
 	init_braz(braz, point1, point2, color);
 	if (braz->length == 0)
 		pixel_put(map, point1[0], point1[1], braz->color);
-	if (braz->lengthY <= braz->lengthX)
+	if (braz->lengthy <= braz->lengthx)
 		braz_helper(map, braz, point1, 1);
 	else
 		braz_helper(map, braz, point1, 2);
@@ -81,48 +85,4 @@ void	pixel_put(t_m *map, int x, int y, int color)
 		i = ((x * map->bit_per_pix / 8) + (y * map->line_size));
 		*((unsigned int *)&map->data_adr[i]) = color;
 	}
-}
-
-int		*rot_x(int *point, t_m *map)
-{
-	int	prev_y;
-
-	prev_y = point[1];
-	point[1] = prev_y * cos(map->delta->drx) + point[2] * sin(map->delta->drx);
-	point[2] = -prev_y * sin(map->delta->drx) + point[2] * cos(map->delta->drx);
-	return (point);
-}
-
-int		*rot_y(int *point, t_m *map)
-{
-	int	prev_x;
-
-	prev_x = point[0];
-	point[0] = prev_x * cos(map->delta->dry) + point[2] * sin(map->delta->dry);
-	point[2] = -prev_x * sin(map->delta->dry) + point[2] * cos(map->delta->dry);
-	return (point);
-}
-
-int		*rot_z(int *point, t_m *map)
-{
-	int	prev_x;
-	int	prev_y;
-
-	prev_x = point[0];
-	prev_y = point[1];
-	point[0] = prev_x * cos(map->delta->drz) - prev_y * sin(map->delta->drz);
-	point[1] = prev_x * sin(map->delta->drz) + prev_y * cos(map->delta->drz);
-	return (point);
-}
-
-int		*isometric(int *point)
-{
-	int	prev_x;
-	int	prev_y;
-
-	prev_x = point[0];
-	prev_y = point[1];
-	point[0] = (prev_x - prev_y) * cos(0.523599);
-	point[1] = -point[2] + (prev_x + prev_y) * sin(0.523599);
-	return (point);
 }

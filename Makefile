@@ -12,9 +12,10 @@
 
 NAME = fdf
 
-CFLAG = -g -O3 -Wall -Wextra -lmlx -framework OpenGL -framework AppKit
+CFLAG = -O3 -Wall -Wextra -lmlx -framework OpenGL -framework AppKit
 
-SRCS = main.c parce.c tools.c init_stuff.c draw.c controls.c
+SRCS = main.c parce.c tools.c init_stuff.c draw.c controls.c lgnl.c \
+		controls_2.c rotating.c
 
 LIBS = ./libft/libft.a
 

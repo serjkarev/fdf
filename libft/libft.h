@@ -95,5 +95,6 @@ void				ft_swap(int *a, int *b);
 int					get_next_line(const int fd, char **line);
 int					*ft_matrix_mult(int *m1, int m2[3][3]);
 int					ft_atoi_hex(char *str);
+int					ft_isdigit_str(char *str);
 
 #endif

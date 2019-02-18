@@ -22,8 +22,7 @@ void	create_color_elem(t_m *map, char *point)
 		map->elem->x = map->curr_pos;
 		map->elem->y = map->length;
 		arr = ft_strsplit(point, ',');
-		map->elem->z = ft_atoi(arr[0]);
-		map->elem->color = ft_atoi_hex(arr[1]);
+		atoi_color_and_z(NULL, arr, map->elem);
 		map->elem->next = NULL;
 		map->elem->tail = map->elem;
 	}
@@ -34,10 +33,11 @@ void	create_color_elem(t_m *map, char *point)
 		map->elem->tail->x = map->curr_pos;
 		map->elem->tail->y = map->length;
 		arr = ft_strsplit(point, ',');
-		map->elem->tail->z = ft_atoi(arr[0]);
-		map->elem->tail->color = ft_atoi_hex(arr[1]);
+		atoi_color_and_z(NULL, arr, map->elem->tail);
 		map->elem->tail->next = NULL;
 	}
+	free_arr(arr);
+	free(point);
 }
 
 void	create_elem(t_m *map, char *point)
@@ -47,7 +47,7 @@ void	create_elem(t_m *map, char *point)
 		map->elem = (t_e*)ft_memalloc(sizeof(t_e));
 		map->elem->x = map->curr_pos;
 		map->elem->y = map->length;
-		map->elem->z = ft_atoi(point);
+		atoi_color_and_z(point, NULL, map->elem);
 		map->elem->color = 0;
 		map->elem->next = NULL;
 		map->elem->tail = map->elem;
@@ -58,7 +58,7 @@ void	create_elem(t_m *map, char *point)
 		map->elem->tail = map->elem->tail->next;
 		map->elem->tail->x = map->curr_pos;
 		map->elem->tail->y = map->length;
-		map->elem->tail->z = ft_atoi(point);
+		atoi_color_and_z(point, NULL, map->elem->tail);
 		map->elem->tail->color = 0;
 		map->elem->tail->next = NULL;
 	}
@@ -85,23 +85,26 @@ int		check_point(t_m *map, char *point)
 	}
 	if (x == 1 && comma == 1)
 		create_color_elem(map, point);
-	else
+	else if (x == 0 && comma == 0)
 		create_elem(map, point);
+	else
+		ft_error(ER05, NULL, NULL);
 	return (1);
 }
 
 void	valid(t_m *map, char *str, int flag)
 {
 	int		i;
-	int 	j;
+	int		j;
 	char	**arr;
 
 	i = 0;
 	j = 0;
-	arr = ft_strsplit(str, ' ');
+	if (!(arr = ft_strsplit(str, ' ')))
+		ft_error(ER01, NULL, NULL);
 	if (!flag)
 	{
-		while(arr[j])
+		while (arr[j])
 			j++;
 		map->width = j;
 	}
@@ -113,19 +116,25 @@ void	valid(t_m *map, char *str, int flag)
 		map->curr_pos++;
 		i++;
 	}
+	free(arr);
+	if (map->curr_pos > map->width || map->curr_pos < map->width)
+		ft_error(ER03, NULL, NULL);
 }
 
 void	parce(int fd, t_m *map)
 {
+	int		res;
 	int		flag;
 	char	*str;
 
 	flag = 0;
-	while (get_next_line(fd, &str))
+	while ((res = get_next_line(fd, &str)) == 1)
 	{
 		valid(map, str, flag);
 		flag = 1;
 		map->length += 1;
 		free(str);
 	}
+	if (res < 0)
+		ft_error(ER01, NULL, NULL);
 }
