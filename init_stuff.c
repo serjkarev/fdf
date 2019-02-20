@@ -24,7 +24,7 @@ void	init_map(t_m *map, char *av)
 	*d = (t_d){0, 0, 10, 0, 0, 0, 1, 0, 0, 0};
 	map->delta = d;
 	map->project = 1;
-	if (ft_strequ(av, "./maps/test_maps/1488.fdf"))
+	if (ft_strequ(av, "./maps/test_maps/special.fdf"))
 		map->special = 1;
 }
 
@@ -58,4 +58,23 @@ void	free_arr(char **arr)
 	while (arr[i])
 		free(arr[i++]);
 	free(arr);
+}
+
+void	sound(int key, t_m *map)
+{
+	if (key == 1)
+		map->delta->sound += 1;
+	else if (key == 46)
+		map->delta->sound = 0;
+	if (map->delta->sound == 1)
+		(map->special == 1) ? system("afplay ./sound/special.mp3&") : \
+					system("afplay ./sound/take_on_me.mp3&");
+	else if (map->delta->sound == 0)
+		system("killall afplay");
+}
+
+void	escape(t_m *map)
+{
+	(map->delta->sound == 2) ? 0 : system("killall afplay");
+	exit(0);
 }

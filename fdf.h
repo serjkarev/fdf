@@ -116,5 +116,6 @@ void			pixel_put(t_m *map, int x, int y, int color);
 int				close_icon(void *param);
 int				lgnl(int fd, char **line);
 void			free_arr(char **arr);
+void			escape(t_m *map);
 
 #endif

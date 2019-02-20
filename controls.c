@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   controls.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skarev <skarev@student.unit.ua>            +#+  +:+       +#+        */
+/*   By: skarev <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/18 14:30:41 by skarev            #+#    #+#             */
-/*   Updated: 2019/02/18 14:30:41 by skarev           ###   ########.fr       */
+/*   Created: 2019/02/20 14:24:23 by skarev            #+#    #+#             */
+/*   Updated: 2019/02/20 14:24:26 by skarev           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,7 @@ int		keypress(int key, void *param)
 
 	map = (t_m*)param;
 	if (key == 53)
-	{
-		(map->delta->sound == 2) ? 0 : system("killall afplay");
-		exit(0);
-	}
+		escape(map);
 	else if (key >= 123 && key <= 126)
 		xy_moving(key, map);
 	else if (key == 84 || key == 86 || key == 88 || \
@@ -46,7 +43,7 @@ int		keypress(int key, void *param)
 		(key == 4) ? help_switch(map) : change_color(map);
 	else if (key == 2 || key == 1 || key == 46)
 		(key == 2) ? map->custom_color = 0 : sound(key, map);
-	ft_bzero(map->data_adr, (map->bit_per_pix / 8) * WIN_SIZE_X * WIN_SIZE_Y);
+	ft_bzero(map->data_adr, (map->bit_per_pix / 8) * (WIN_SIZE_X * WIN_SIZE_Y));
 	draw(map);
 	return (0);
 }

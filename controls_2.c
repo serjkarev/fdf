@@ -68,24 +68,12 @@ void	change_color(t_m *map)
 		map->delta->dc = 0;
 }
 
-void	sound(int key, t_m *map)
-{
-	if (key == 1)
-		map->delta->sound += 1;
-	else if (key == 46)
-		map->delta->sound = 0;
-	if (map->delta->sound == 1)
-		(map->special == 1) ? system("afplay ./sound/special.mp3&") : \
-					system("afplay ./sound/take_on_me.mp3&");
-	else if (map->delta->sound == 0)
-		system("killall afplay");
-}
-
 void	rotating_2(int key, t_m *map)
 {
 	static double	kek = 0.01;
-	char			flag = 1;
+	char			flag;
 
+	flag = 1;
 	if (kek <= 1.55 && flag == 0)
 		flag = 1;
 	if (kek >= 1.59)
